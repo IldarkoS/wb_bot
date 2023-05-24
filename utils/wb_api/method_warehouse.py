@@ -708,6 +708,7 @@ def valid_token_fbs(token):
         """
     client = JWTApiClient(token)
     data = client.check_token()
+    # print(data.text)
     attempt = 0
     while data.status_code != 200:
         attempt += 1

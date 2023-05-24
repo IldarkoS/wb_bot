@@ -274,8 +274,6 @@ async def send_new_orders_fbs(orders, seller_id):
             f'💼 Комиссия (базовая): {hbold("15%")}',
             f'💎 Выкуп за 3 мес: {hbold(f"{count_bought} шт")}',
             f'🌐 {from_stock} → {order["oblast"]}',
-            f'🚛 В пути до клиента: {in_way_to_client}',
-            f'🚚 В пути возвраты: {in_way_from_client}',
             f'🗂 В продаже: {in_order}',
         ]
         if enough_for < seller.reserve:

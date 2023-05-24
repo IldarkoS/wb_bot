@@ -7,7 +7,7 @@ class JWTApiClient:
 
     def __init__(self, new_api_key: str):
         self.token = new_api_key
-        self.base = "https://statistics-api.wildberries.ru/api/v1/supplier/"
+        self.base = "https://suppliers-api.wildberries.ru/public/api/"
 
     def build_headers(self):
         return {
