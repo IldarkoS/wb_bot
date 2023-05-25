@@ -26,7 +26,7 @@ async def update_all_bought(wait_for):
         :param wait_for: время в минутах
      """
     while True:
-        await asyncio.sleep(wait_for * 10)
+        await asyncio.sleep(wait_for * 60)
         sellers = await select_all_sellers_enable()
         for seller in sellers:
             last_scan_orders = get_date(days=1)
@@ -66,7 +66,7 @@ async def update_stocks(wait_for):
         :param wait_for: время в часах
      """
     while True:
-        await asyncio.sleep(wait_for * 10)
+        await asyncio.sleep(wait_for * 3600)
         sellers = await select_all_sellers_enable()
         for seller in sellers:
 
@@ -444,9 +444,10 @@ async def shutdown_bot(wait_for):
             users = await select_user_by_seller(seller.id)
             paid = False
             for user in users:
-                if user.balance >= AMOUNT_TARIFF:
+                if user.discount is None: discount = 0
+                if user.balance >= AMOUNT_TARIFF - (AMOUNT_TARIFF*0.01*user.discount):
                     paid = True
-                    await update_balance(user.id, -AMOUNT_TARIFF)
+                    await update_balance(user.id, -(AMOUNT_TARIFF - (AMOUNT_TARIFF*0.01*user.discount)))
                     await update_trail("paid", seller.id)
                     break
             if paid is False:
@@ -458,9 +459,9 @@ async def shutdown_bot(wait_for):
             paid = False
             if seller.starting_tarif is None:
                 for user in users:
-                    if user.balance >= AMOUNT_TARIFF:
+                    if user.balance >= AMOUNT_TARIFF - (AMOUNT_TARIFF*0.01*user.discount):
                         paid = True
-                        await update_balance(user.id, -AMOUNT_TARIFF)
+                        await update_balance(user.id, -(AMOUNT_TARIFF - (AMOUNT_TARIFF*0.01*user.discount)))
                         await update_trail("paid", seller.id)
                         break
                 if paid is False:

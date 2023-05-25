@@ -126,6 +126,7 @@ class User(TimeBaseModel):
     name = Column(String(100))
     chat_id = Column(BigInteger, unique=True)
     balance = Column(db.Integer)
+    discount = Column(db.Integer, default=0)
 
     query: sql.Select
 
